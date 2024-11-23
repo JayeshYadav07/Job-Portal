@@ -10,12 +10,12 @@ const jobRoute = require("./routes/jobRoute");
 const applicationRoute = require("./routes/applicationRoute");
 
 const app = express();
-const cookieOptions = {
-	origin: ["http://localhost:5173"],
+const corsOptions = {
+	origin: process.env.CORS_ORIGIN.split(","),
 	credentials: true,
 };
-app.use(cors());
-app.use(cookieParser(cookieOptions));
+app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
