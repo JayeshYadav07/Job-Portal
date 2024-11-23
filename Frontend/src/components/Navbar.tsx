@@ -2,9 +2,10 @@ import { LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-	const user = true;
+	const user = false;
 	return (
 		<div className="flex mx-auto justify-between p-4 max-w-screen-xl">
 			<div>
@@ -15,23 +16,27 @@ export default function Navbar() {
 			<div className="flex gap-4">
 				<ul className="flex gap-4 items-center">
 					<li>
-						<a href="">Home</a>
+						<Link to="/">Home</Link>
 					</li>
 					<li>
-						<a href="">Jobs</a>
+						<Link to="/job">Job</Link>
 					</li>
 					<li>
-						<a href="">Browse</a>
+						<Link to="/browse">Browse</Link>
 					</li>
 				</ul>
 				{!user ? (
 					<div className="flex gap-2">
-						<Button className="bg-black hover:bg-blue-500">
-							Login
-						</Button>
-						<Button className="bg-red-600 hover:bg-blue-500">
-							SignUp
-						</Button>
+						<Link to="/login">
+							<Button className="bg-black hover:bg-blue-500">
+								Login
+							</Button>
+						</Link>
+						<Link to="/signup">
+							<Button className="bg-red-600 hover:bg-blue-500">
+								SignUp
+							</Button>
+						</Link>
 					</div>
 				) : (
 					<div>
