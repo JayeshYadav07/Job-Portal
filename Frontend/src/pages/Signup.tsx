@@ -5,10 +5,13 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { RadioGroup } from "../components/ui/radio-group";
 import { useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { API_URL } from "../utils/constant";
+import { toast } from "sonner";
 function Signup() {
 	const [input, setInput] = useState({
-		fullname: "",
-		phone: "",
+		fullName: "",
+		phoneNumber: "",
 		email: "",
 		password: "",
 		role: "student",
@@ -16,9 +19,29 @@ function Signup() {
 	const handleInput = (e: any) => {
 		setInput({ ...input, [e.target.name]: e.target.value });
 	};
-	const handleSubmit = (e: any) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		console.log(input);
+		try {
+			const response: AxiosResponse = await axios.post(
+				`${API_URL}/user/register`,
+				input,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+					withCredentials: true,
+				}
+			);
+			toast.success(response.data.message, {
+				duration: 2000,
+				richColors: true,
+			});
+		} catch (error: any) {
+			toast.error(error.response.data.message, {
+				duration: 2000,
+				richColors: true,
+			});
+		}
 	};
 	return (
 		<div>
@@ -29,8 +52,8 @@ function Signup() {
 						<Label>Fullname</Label>
 						<Input
 							type="text"
-							name="fullname"
-							value={input.fullname}
+							name="fullName"
+							value={input.fullName}
 							placeholder="John Doe"
 							onChange={handleInput}
 						/>
@@ -39,8 +62,8 @@ function Signup() {
 						<Label>Phone Number</Label>
 						<Input
 							type="number"
-							name="phone"
-							value={input.phone}
+							name="phoneNumber"
+							value={input.phoneNumber}
 							placeholder="1234567890"
 							onChange={handleInput}
 						/>
