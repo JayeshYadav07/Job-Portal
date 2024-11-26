@@ -1,10 +1,12 @@
 const Footer = () => {
 	return (
-		<footer className="bg-gray-100 text-gray-700 py-10 ">
+		<footer className="bg-gray-100 text-gray-700 py-10 px-4">
 			<div className="max-w-screen-lg mx-auto">
 				<div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 					<div>
-						<h2 className="text-lg font-semibold mb-4 text-red-500">About Us</h2>
+						<h2 className="text-lg font-semibold mb-4 text-red-500">
+							About Us
+						</h2>
 						<p className="text-sm">
 							We are dedicated to providing the best services to
 							our clients. Our focus is on quality and innovation.
