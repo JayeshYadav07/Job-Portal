@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { Toaster } from "./components/ui/sonner";
 import Job from "./pages/Job";
+import Browse from "./pages/Browse";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -21,6 +22,10 @@ export default function App() {
 		{
 			path: "/job",
 			element: <Job />,
+		},
+		{
+			path: "/browse",
+			element: <Browse />,
 		},
 		{
 			path: "*",
