@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Toaster } from "./components/ui/sonner";
+import Job from "./pages/Job";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -16,6 +17,10 @@ export default function App() {
 		{
 			path: "/signup",
 			element: <Signup />,
+		},
+		{
+			path: "/job",
+			element: <Job />,
 		},
 		{
 			path: "*",
