@@ -5,11 +5,37 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../app/userSlice";
+import axios from "axios";
+import { API_URL } from "../utils/constant";
+import { toast } from "sonner";
 
 export default function Navbar() {
 	const { user } = useSelector((state: any) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const handleLogout = async () => {
+		try {
+			const response = await axios.get(`${API_URL}/user/logout`, {
+				withCredentials: true,
+			});
+
+			if (response.data.success) {
+				toast.success(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+				dispatch(removeUser());
+				navigate("/login");
+			}
+		} catch (error: any) {
+			toast.error(error.response.data.message, {
+				duration: 2000,
+				richColors: true,
+			});
+		}
+	};
+
 	return (
 		<div className="flex mx-auto justify-between p-4 max-w-screen-xl">
 			<div>
@@ -89,10 +115,7 @@ export default function Navbar() {
 										<LogOut />
 										<Button
 											variant="link"
-											onClick={() => {
-												dispatch(removeUser());
-												navigate("/");
-											}}
+											onClick={handleLogout}
 										>
 											Logout
 										</Button>
