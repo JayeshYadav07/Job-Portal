@@ -47,16 +47,24 @@ export default function Navbar() {
 						<Popover>
 							<PopoverTrigger>
 								<Avatar>
-									<AvatarImage src="https://github.com/shad.png" />
-									<AvatarFallback>CN</AvatarFallback>
+									<AvatarImage
+										src={user.profile?.profilePhoto}
+									/>
+									<AvatarFallback>
+										{user.fullName[0].toUpperCase()}
+									</AvatarFallback>
 								</Avatar>
 							</PopoverTrigger>
 							<PopoverContent>
 								<div className="flex gap-3 items-center">
 									<div>
 										<Avatar>
-											<AvatarImage src="https://github.com/shad.png" />
-											<AvatarFallback>CN</AvatarFallback>
+											<AvatarImage
+												src={user.profile?.profilePhoto}
+											/>
+											<AvatarFallback>
+												{user.fullName[0].toUpperCase()}
+											</AvatarFallback>
 										</Avatar>
 									</div>
 									<div>

@@ -15,11 +15,10 @@ function Profile() {
 					<div className="flex gap-4 items-center">
 						<div>
 							<Avatar className="h-20 w-20">
-								<AvatarImage
-									src="https://github.com/shad.png"
-									alt="@shadcn"
-								/>
-								<AvatarFallback>CN</AvatarFallback>
+								<AvatarImage src={user.profile?.profilePhoto} />
+								<AvatarFallback className="text-3xl">
+									{user.fullName[0].toUpperCase()}
+								</AvatarFallback>
 							</Avatar>
 						</div>
 						<div>
