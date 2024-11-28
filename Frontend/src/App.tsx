@@ -6,6 +6,8 @@ import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
+import { Provider } from "react-redux";
+import store from "./app/store";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -38,9 +40,9 @@ export default function App() {
 		},
 	]);
 	return (
-		<div>
+		<Provider store={store}>
 			<RouterProvider router={router} />
 			<Toaster />
-		</div>
+		</Provider>
 	);
 }
