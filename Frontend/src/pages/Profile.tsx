@@ -4,9 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import UpdateProfileDialog from "../components/UpdateProfileDialog";
 
 function Profile() {
 	const { user } = useSelector((state: any) => state.user);
+	const [open, setOpen] = useState(false);
 	return (
 		<div>
 			<Navbar />
@@ -15,7 +18,9 @@ function Profile() {
 					<div className="flex gap-4 items-center">
 						<div>
 							<Avatar className="h-20 w-20">
-								<AvatarImage src={user.profile?.profilePhoto} />
+								<AvatarImage
+									src={user?.profile?.profilePhoto}
+								/>
 								<AvatarFallback className="text-3xl">
 									{user.fullName[0].toUpperCase()}
 								</AvatarFallback>
@@ -23,13 +28,16 @@ function Profile() {
 						</div>
 						<div>
 							<h1 className="text-2xl font-bold">
-								{user.fullName}
+								{user?.fullName}
 							</h1>
 							<p className="text-gray-700">{user.profile?.bio}</p>
 						</div>
 					</div>
 					<div>
-						<Pen className="cursor-pointer hover:text-red-600" />
+						<Pen
+							className="cursor-pointer hover:text-red-600"
+							onClick={() => setOpen(true)}
+						/>
 					</div>
 				</div>
 				<div>
@@ -40,13 +48,13 @@ function Profile() {
 						<div className="flex gap-2 items-end">
 							<Mail className="text-gray-900" />
 							<p className="text-gray-700 text-sm">
-								{user.email}
+								{user?.email}
 							</p>
 						</div>
 						<div className="flex gap-2 items-end">
 							<Phone className="text-gray-900" />
 							<p className="text-gray-700 text-sm">
-								{user.phoneNumber}
+								{user?.phoneNumber}
 							</p>
 						</div>
 					</div>
@@ -56,7 +64,9 @@ function Profile() {
 					<div className="flex gap-4">
 						{user?.profile?.skills?.length > 0 ? (
 							user?.profile.skills.map((skill: string) => (
-								<Badge variant="destructive">{skill}</Badge>
+								<Badge key={skill} variant="destructive">
+									{skill}
+								</Badge>
 							))
 						) : (
 							<p className="text-gray-700 text-sm">NA</p>
@@ -81,6 +91,7 @@ function Profile() {
 					</div>
 				</div>
 			</div>
+			<UpdateProfileDialog open={open} setOpen={setOpen} />
 		</div>
 	);
 }
