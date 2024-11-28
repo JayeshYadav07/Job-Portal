@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -8,8 +8,14 @@ import { useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../utils/constant";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { startLoading, stopLoading, setUser } from "../app/userSlice";
+import { Loader } from "lucide-react";
 
 function Login() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { loading } = useSelector((state: any) => state.user);
 	const [input, setInput] = useState({
 		email: "",
 		password: "",
@@ -19,6 +25,7 @@ function Login() {
 		setInput({ ...input, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = async (e: any) => {
+		dispatch(startLoading());
 		e.preventDefault();
 		try {
 			const response: AxiosResponse = await axios.post(
@@ -31,15 +38,26 @@ function Login() {
 					withCredentials: true,
 				}
 			);
-			toast.success(response.data.message, {
-				duration: 2000,
-				richColors: true,
-			});
+			if (response.data.success) {
+				toast.success(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+				dispatch(setUser(response.data.user));
+				navigate("/");
+			} else {
+				toast.error(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+			}
 		} catch (error: any) {
 			toast.error(error.response.data.message, {
 				duration: 2000,
 				richColors: true,
 			});
+		} finally {
+			dispatch(stopLoading());
 		}
 	};
 	return (
@@ -96,7 +114,16 @@ function Login() {
 						</Link>
 					</div>
 					<div className="my-2">
-						<Button className="w-full">Submit</Button>
+						<Button className="w-full" disabled={loading}>
+							{loading ? (
+								<div className="flex items-center">
+									<Loader className="mr-2 animate-spin" />
+									Loading
+								</div>
+							) : (
+								<p>Submit</p>
+							)}
+						</Button>
 					</div>
 				</form>
 			</div>

@@ -2,10 +2,14 @@ import { LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../app/userSlice";
 
 export default function Navbar() {
-	const user = false;
+	const { user } = useSelector((state: any) => state.user);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	return (
 		<div className="flex mx-auto justify-between p-4 max-w-screen-xl">
 			<div>
@@ -57,22 +61,33 @@ export default function Navbar() {
 									</div>
 									<div>
 										<p className="font-bold">
-											Jayesh Yadav
+											{user.fullName}
 										</p>
 										<p className="text-xs">
-											Lorem ipsum dolor sit amet cons
-											ectetur adip isicing elit.
+											{user.profile?.bio}
 										</p>
 									</div>
 								</div>
 								<div>
 									<div className="flex gap-2 items-center">
 										<User />
-										<Button variant="link">Profile</Button>
+										<Link to="/profile">
+											<Button variant="link">
+												Profile
+											</Button>
+										</Link>
 									</div>
 									<div className="flex gap-2 items-center">
 										<LogOut />
-										<Button variant="link">Logout</Button>
+										<Button
+											variant="link"
+											onClick={() => {
+												dispatch(removeUser());
+												navigate("/");
+											}}
+										>
+											Logout
+										</Button>
 									</div>
 								</div>
 							</PopoverContent>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -8,7 +8,10 @@ import { useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../utils/constant";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 function Signup() {
+	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 	const [input, setInput] = useState({
 		fullName: "",
 		phoneNumber: "",
@@ -20,6 +23,7 @@ function Signup() {
 		setInput({ ...input, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = async (e: any) => {
+		setLoading(true);
 		e.preventDefault();
 		try {
 			const response: AxiosResponse = await axios.post(
@@ -32,15 +36,27 @@ function Signup() {
 					withCredentials: true,
 				}
 			);
-			toast.success(response.data.message, {
-				duration: 2000,
-				richColors: true,
-			});
+			if (response.data.success) {
+				console.log(response.data);
+				toast.success(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+				setLoading(false);
+				navigate("/login");
+			} else {
+				toast.error(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+			}
 		} catch (error: any) {
 			toast.error(error.response.data.message, {
 				duration: 2000,
 				richColors: true,
 			});
+		} finally {
+			setLoading(false);
 		}
 	};
 	return (
@@ -117,7 +133,16 @@ function Signup() {
 						</Link>
 					</div>
 					<div className="my-2 flex justify-center">
-						<Button className="w-full">Submit</Button>
+						<Button className="w-full">
+							{loading ? (
+								<div className="flex items-center">
+									<Loader className="mr-2 animate-spin" />
+									Loading
+								</div>
+							) : (
+								<p>Submit</p>
+							)}
+						</Button>
 					</div>
 				</form>
 			</div>

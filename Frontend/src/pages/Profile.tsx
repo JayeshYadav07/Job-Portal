@@ -3,9 +3,10 @@ import Navbar from "../components/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
+import { useSelector } from "react-redux";
 
 function Profile() {
-	const isResume = true;
+	const { user } = useSelector((state: any) => state.user);
 	return (
 		<div>
 			<Navbar />
@@ -22,12 +23,10 @@ function Profile() {
 							</Avatar>
 						</div>
 						<div>
-							<h1 className="text-2xl font-bold">Jayesh Yadav</h1>
-							<p className="text-gray-700">
-								Upcoming Software Engineer at Google , India. My
-								goal is to become a full stack developer and
-								work at Google.
-							</p>
+							<h1 className="text-2xl font-bold">
+								{user.fullName}
+							</h1>
+							<p className="text-gray-700">{user.profile?.bio}</p>
 						</div>
 					</div>
 					<div>
@@ -42,13 +41,13 @@ function Profile() {
 						<div className="flex gap-2 items-end">
 							<Mail className="text-gray-900" />
 							<p className="text-gray-700 text-sm">
-								abc@example.com
+								{user.email}
 							</p>
 						</div>
 						<div className="flex gap-2 items-end">
 							<Phone className="text-gray-900" />
 							<p className="text-gray-700 text-sm">
-								+91 1234567890
+								{user.phoneNumber}
 							</p>
 						</div>
 					</div>
@@ -56,25 +55,25 @@ function Profile() {
 				<div>
 					<h1 className="text-lg font-medium mb-2">Skills</h1>
 					<div className="flex gap-4">
-						<Badge variant="destructive">React</Badge>
-						<Badge variant="destructive">MongoDb</Badge>
-						<Badge variant="destructive">Express</Badge>
-						<Badge variant="destructive">Node</Badge>
+						{user?.profile?.skills?.length > 0 ? (
+							user?.profile.skills.map((skill: string) => (
+								<Badge variant="destructive">{skill}</Badge>
+							))
+						) : (
+							<p className="text-gray-700 text-sm">NA</p>
+						)}
 					</div>
 				</div>
 				<div>
 					<h1 className="text-lg font-medium">Resume</h1>
 					<div>
-						{isResume ? (
+						{user.profile.resume ? (
 							<Button
 								variant="link"
 								className="p-0 text-blue-700 border-b"
 							>
-								<a
-									href="https://drive.google.com/drive/u/0/my-drive"
-									target="_blank"
-								>
-									Jayesh Yadav's resume
+								<a href={user.profile.resume} target="_blank">
+									{user.fullName}'s resume
 								</a>
 							</Button>
 						) : (
