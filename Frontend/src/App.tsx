@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Browse from "./pages/Browse";
+import Profile from "./pages/Profile";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -26,6 +27,10 @@ export default function App() {
 		{
 			path: "/browse",
 			element: <Browse />,
+		},
+		{
+			path: "/profile",
+			element: <Profile />,
 		},
 		{
 			path: "*",
