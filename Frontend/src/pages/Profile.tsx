@@ -19,6 +19,7 @@ function Profile() {
 						<div>
 							<Avatar className="h-20 w-20">
 								<AvatarImage
+									className="object-cover object-top"
 									src={user?.profile?.profilePhoto}
 								/>
 								<AvatarFallback className="text-3xl">

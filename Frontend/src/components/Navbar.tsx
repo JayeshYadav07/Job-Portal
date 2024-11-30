@@ -74,6 +74,7 @@ export default function Navbar() {
 							<PopoverTrigger>
 								<Avatar>
 									<AvatarImage
+										className="object-cover object-top"
 										src={user.profile?.profilePhoto}
 									/>
 									<AvatarFallback>
@@ -86,6 +87,7 @@ export default function Navbar() {
 									<div>
 										<Avatar>
 											<AvatarImage
+												className="object-cover object-top"
 												src={user.profile?.profilePhoto}
 											/>
 											<AvatarFallback>
