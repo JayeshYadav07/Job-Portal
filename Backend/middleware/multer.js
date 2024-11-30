@@ -1,5 +1,5 @@
 const multer = require("multer");
 const storage = multer.memoryStorage();
-const multipleUpload = multer({ storage }).any("files", 2);
+const multipleUpload = multer({ storage }).any();
 
 module.exports = { multipleUpload };

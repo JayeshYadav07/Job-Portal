@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const uploadFiles = require("../utils/uploadFiles");
 
 const register = async (req, res) => {
 	try {
@@ -154,6 +155,22 @@ const updateProfile = async (req, res) => {
 			user.profile.skills = skillsArray;
 		}
 
+		if (req.files) {
+			const result = await uploadFiles(req.files);
+
+			for (let i = 0; i < result.length; i++) {
+				if (
+					result[i].format === "png" ||
+					result[i].format === "jpg" ||
+					result[i].format === "jpeg"
+				) {
+					user.profile.profilePhoto = result[i].secure_url;
+				}
+				if (result[i].format === "pdf") {
+					user.profile.resume = result[i].secure_url;
+				}
+			}
+		}
 		await user.save();
 
 		return res.status(200).json({
