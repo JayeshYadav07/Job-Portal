@@ -1,6 +1,7 @@
 import { Bookmark } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 function JobCard() {
 	return (
@@ -42,7 +43,11 @@ function JobCard() {
 				</Badge>
 			</div>
 			<div className="flex gap-2">
-				<Button className="bg-black hover:bg-blue-500">Details</Button>
+				<Link to="/description/123">
+					<Button className="bg-black hover:bg-blue-500">
+						Details
+					</Button>
+				</Link>
 				<Button className="bg-red-600 hover:bg-blue-500">
 					Save for later
 				</Button>

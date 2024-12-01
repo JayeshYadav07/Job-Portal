@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
+import JobDescription from "./pages/JobDescription";
 import { Provider } from "react-redux";
 import store from "./app/store";
 export default function App() {
@@ -33,6 +34,10 @@ export default function App() {
 		{
 			path: "/profile",
 			element: <Profile />,
+		},
+		{
+			path: "/description/:id",
+			element: <JobDescription />,
 		},
 		{
 			path: "*",
