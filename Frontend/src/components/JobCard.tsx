@@ -3,11 +3,22 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 
-function JobCard() {
+function JobCard({ job }: any) {
+	const createdAt = Math.floor(
+		(new Date().getTime() - new Date(job.createdAt).getTime()) /
+			(1000 * 60 * 60 * 24)
+	);
 	return (
 		<div className="p-4 border shadow-lg border-gray-200 rounded flex flex-col gap-4">
 			<div className="flex justify-between items-center">
-				<h2 className="text-gray-600 text-xs">2 days ago</h2>
+				<h2 className="text-gray-600 text-xs">
+					{createdAt > 1 ? createdAt : null}
+					{createdAt == 0
+						? "today"
+						: createdAt == 1
+						? "yesterday"
+						: " days ago"}
+				</h2>
 				<Bookmark className="cursor-pointer" />
 			</div>
 			<div className="flex gap-4 items-center">
@@ -19,31 +30,29 @@ function JobCard() {
 					/>
 				</div>
 				<div>
-					<h2 className="text-md font-semibold">Google</h2>
-					<p className="text-gray-600 text-xs">India</p>
+					<h2 className="text-md font-semibold">
+						{job?.companyId?.name}
+					</h2>
+					<p className="text-gray-600 text-xs">{job?.location}</p>
 				</div>
 			</div>
 			<div>
-				<h3 className="font-medium mb-2">Full Stack Developer</h3>
-				<p className="text-gray-600 text-xs">
-					Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Cumque, velit!
-				</p>
+				<h3 className="font-medium mb-2">{job?.title}</h3>
+				<p className="text-gray-600 text-xs">{job?.description}</p>
 			</div>
 			<div className="flex gap-2">
 				<Badge variant="outline" className="text-blue-500">
-					20 Position
+					{job?.position} Position
 				</Badge>
 				<Badge variant="outline" className="text-red-500">
-					Full-Time
+					{job?.jobType}
 				</Badge>
 				<Badge variant="outline" className="text-purple-500">
-					20 LPA
+					{job?.salary} LPA
 				</Badge>
 			</div>
 			<div className="flex gap-2">
-				<Link to="/description/123">
+				<Link to={`/description/${job._id}`}>
 					<Button className="bg-black hover:bg-blue-500">
 						Details
 					</Button>

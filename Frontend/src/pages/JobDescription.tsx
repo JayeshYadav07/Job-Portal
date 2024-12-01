@@ -3,8 +3,12 @@ import Navbar from "../components/Navbar";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { StepBack } from "lucide-react";
+import { useSelector } from "react-redux";
 function JobDescription() {
 	const { id } = useParams();
+	const { jobs } = useSelector((state: any) => state.job);
+	const job = jobs.find((job: any) => job._id === id);
+
 	const isApplied = true;
 	return (
 		<div>
@@ -14,7 +18,7 @@ function JobDescription() {
 					<div className="flex justify-between">
 						<div className="flex flex-col gap-2">
 							<h2 className="text-xl font-semibold">
-								Frontend Developer
+								{job?.title}
 							</h2>
 
 							<div className="flex flex-wrap gap-2">
@@ -22,19 +26,19 @@ function JobDescription() {
 									variant="outline"
 									className="text-blue-500"
 								>
-									20 Position
+									{job?.position} Position
 								</Badge>
 								<Badge
 									variant="outline"
 									className="text-red-500"
 								>
-									Full-Time
+									{job?.jobType}
 								</Badge>
 								<Badge
 									variant="outline"
 									className="text-purple-500"
 								>
-									20 LPA
+									{job?.salary} LPA
 								</Badge>
 							</div>
 						</div>
@@ -53,34 +57,31 @@ function JobDescription() {
 							<span className="font-medium mr-1 text-black">
 								Role:
 							</span>
-							Frontend Developer
+							{job?.title}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Location:
 							</span>
-							Mumbai, India
+							{job?.location}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Description:
 							</span>
-							We are looking for a Frontend Developer to join our
-							team. Who will be responsible for creating and
-							maintaining the user interface of our web
-							application.
+							{job?.description}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Experience:
 							</span>
-							3-5 years
+							{job?.experienceLevel} years
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
-								Salary :{" "}
+								Salary :
 							</span>
-							20 LPA
+							{job?.salary} LPA
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
@@ -92,7 +93,7 @@ function JobDescription() {
 							<span className="font-medium mr-1 text-black">
 								Requirements:
 							</span>
-							HTML, CSS, JavaScript
+							{job?.requirements.join(", ")}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
