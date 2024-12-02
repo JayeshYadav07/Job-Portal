@@ -3,13 +3,65 @@ import Navbar from "../components/Navbar";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { StepBack } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "../utils/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { setSingleJob } from "../app/jobSlice";
+import { toast } from "sonner";
 function JobDescription() {
 	const { id } = useParams();
-	const { jobs } = useSelector((state: any) => state.job);
-	const job = jobs.find((job: any) => job._id === id);
+	const dispatch = useDispatch();
+	const { singleJob } = useSelector((state: any) => state.job);
+	const { user } = useSelector((state: any) => state.user);
+	const [isApplied, setIsApplied] = useState(
+		singleJob?.applicants?.includes(user?._id)
+	);
 
-	const isApplied = true;
+	useEffect(() => {
+		const fetchJobs = async () => {
+			try {
+				const response = await axios.get(`${API_URL}/job/get/${id}`, {
+					withCredentials: true,
+				});
+
+				if (response.data.success) {
+					const jobs = response.data.job;
+
+					dispatch(setSingleJob(jobs));
+					setIsApplied(
+						jobs?.applications?.some((application: any) => {
+							return application.applicant === user?._id;
+						})
+					);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchJobs();
+	}, [id, dispatch, user?._id]);
+
+	const handleApply = async () => {
+		try {
+			const response = await axios.post(
+				`${API_URL}/application/apply/${id}`,
+				{},
+				{
+					withCredentials: true,
+				}
+			);
+			if (response.data.success) {
+				toast.success(response.data.message, {
+					duration: 2000,
+					richColors: true,
+				});
+				setIsApplied(true);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<div>
 			<Navbar />
@@ -18,7 +70,7 @@ function JobDescription() {
 					<div className="flex justify-between">
 						<div className="flex flex-col gap-2">
 							<h2 className="text-xl font-semibold">
-								{job?.title}
+								{singleJob?.title}
 							</h2>
 
 							<div className="flex flex-wrap gap-2">
@@ -26,24 +78,24 @@ function JobDescription() {
 									variant="outline"
 									className="text-blue-500"
 								>
-									{job?.position} Position
+									{singleJob?.position} Position
 								</Badge>
 								<Badge
 									variant="outline"
 									className="text-red-500"
 								>
-									{job?.jobType}
+									{singleJob?.jobType}
 								</Badge>
 								<Badge
 									variant="outline"
 									className="text-purple-500"
 								>
-									{job?.salary} LPA
+									{singleJob?.salary} LPA
 								</Badge>
 							</div>
 						</div>
 						<div>
-							<Button disabled={isApplied}>
+							<Button disabled={isApplied} onClick={handleApply}>
 								{isApplied ? "Already Applied" : "Apply Now"}
 							</Button>
 						</div>
@@ -57,49 +109,49 @@ function JobDescription() {
 							<span className="font-medium mr-1 text-black">
 								Role:
 							</span>
-							{job?.title}
+							{singleJob?.title}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Location:
 							</span>
-							{job?.location}
+							{singleJob?.location}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Description:
 							</span>
-							{job?.description}
+							{singleJob?.description}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Experience:
 							</span>
-							{job?.experienceLevel} years
+							{singleJob?.experienceLevel} years
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Salary :
 							</span>
-							{job?.salary} LPA
+							{singleJob?.salary} LPA
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Total Applicants:
 							</span>
-							20
+							{singleJob?.applications.length}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Requirements:
 							</span>
-							{job?.requirements.join(", ")}
+							{singleJob?.requirements.join(", ")}
 						</div>
 						<div>
 							<span className="font-medium mr-1 text-black">
 								Posted On:
 							</span>
-							16-09-2024
+							{singleJob?.createdAt.split("T")[0]}
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
@@ -111,7 +163,9 @@ function JobDescription() {
 								<StepBack /> Back
 							</Button>
 						</Link>
-						{!isApplied && <Button>Apply Now</Button>}
+						{!isApplied && (
+							<Button onClick={handleApply}>Apply Now</Button>
+						)}
 					</div>
 				</div>
 			</div>
