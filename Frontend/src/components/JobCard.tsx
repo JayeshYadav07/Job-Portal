@@ -9,7 +9,7 @@ function JobCard({ job }: any) {
 			(1000 * 60 * 60 * 24)
 	);
 	return (
-		<div className="p-4 border shadow-lg border-gray-200 rounded flex flex-col gap-4">
+		<div className="p-4 border shadow-lg border-gray-200 rounded flex flex-col gap-4 max-h-[300px]">
 			<div className="flex justify-between items-center">
 				<h2 className="text-gray-600 text-xs">
 					{createdAt > 1 ? createdAt : null}
