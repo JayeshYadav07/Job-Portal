@@ -1,14 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Toaster } from "./components/ui/sonner";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Job from "./pages/Job";
 import Browse from "./pages/Browse";
-import Profile from "./pages/Profile";
+import Home from "./pages/Home";
+import Job from "./pages/Job";
 import JobDescription from "./pages/JobDescription";
-import { Provider } from "react-redux";
-import store from "./app/store";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -44,10 +41,5 @@ export default function App() {
 			element: <h1>404 Not Found</h1>,
 		},
 	]);
-	return (
-		<Provider store={store}>
-			<RouterProvider router={router} />
-			<Toaster />
-		</Provider>
-	);
+	return <RouterProvider router={router} />;
 }

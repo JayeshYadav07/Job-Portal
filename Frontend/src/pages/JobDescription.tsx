@@ -14,9 +14,7 @@ function JobDescription() {
 	const dispatch = useDispatch();
 	const { singleJob } = useSelector((state: any) => state.job);
 	const { user } = useSelector((state: any) => state.user);
-	const [isApplied, setIsApplied] = useState(
-		singleJob?.applicants?.includes(user?._id)
-	);
+	const [isApplied, setIsApplied] = useState<boolean>();
 
 	useEffect(() => {
 		const fetchJobs = async () => {
