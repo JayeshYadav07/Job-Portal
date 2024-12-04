@@ -45,15 +45,28 @@ export default function Navbar() {
 			</div>
 			<div className="flex gap-4">
 				<ul className="flex gap-4 items-center">
-					<li>
-						<Link to="/">Home</Link>
-					</li>
-					<li>
-						<Link to="/job">Job</Link>
-					</li>
-					<li>
-						<Link to="/browse">Browse</Link>
-					</li>
+					{user?.role === "recruiter" ? (
+						<>
+							<li>
+								<Link to="/admin/companies">Companies</Link>
+							</li>
+							<li>
+								<Link to="/admin/jobs">Jobs</Link>
+							</li>
+						</>
+					) : (
+						<>
+							<li>
+								<Link to="/">Home</Link>
+							</li>
+							<li>
+								<Link to="/job">Job</Link>
+							</li>
+							<li>
+								<Link to="/browse">Browse</Link>
+							</li>
+						</>
+					)}
 				</ul>
 				{!user ? (
 					<div className="flex gap-2">
@@ -104,15 +117,17 @@ export default function Navbar() {
 										</p>
 									</div>
 								</div>
-								<div>
-									<div className="flex gap-2 items-center">
-										<User />
-										<Link to="/profile">
-											<Button variant="link">
-												Profile
-											</Button>
-										</Link>
-									</div>
+								<div className="p-2">
+									{user && user.role === "student" && (
+										<div className="flex gap-2 items-center">
+											<User />
+											<Link to="/profile">
+												<Button variant="link">
+													Profile
+												</Button>
+											</Link>
+										</div>
+									)}
 									<div className="flex gap-2 items-center">
 										<LogOut />
 										<Button
