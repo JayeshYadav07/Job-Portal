@@ -10,22 +10,14 @@ import {
 	TableHeader,
 	TableRow,
 } from "../ui/table";
+import useFetchCompanies from "../../hooks/useFetchCompanies";
+import { useSelector } from "react-redux";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 function CompaniesTable() {
-	const invoices = [
-		{
-			invoice: "INV001",
-			paymentStatus: "Paid",
-			totalAmount: "$250.00",
-			paymentMethod: "Credit Card",
-		},
-		{
-			invoice: "INV002",
-			paymentStatus: "Pending",
-			totalAmount: "$150.00",
-			paymentMethod: "PayPal",
-		},
-	];
+	useFetchCompanies();
+	const { companies } = useSelector((state: any) => state.companies);
 	return (
 		<Table className="mt-4">
 			<TableCaption>A list of your recent invoices.</TableCaption>
@@ -38,13 +30,20 @@ function CompaniesTable() {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{invoices.map((invoice) => (
-					<TableRow key={invoice.invoice}>
+				{companies?.map((company: any) => (
+					<TableRow key={company?._id}>
 						<TableCell className="font-medium">
-							{invoice.invoice}
+							<Avatar>
+								<AvatarImage src={company?.logo} />
+								<AvatarFallback>
+									{company.name[0].toUpperCase()}
+								</AvatarFallback>
+							</Avatar>
 						</TableCell>
-						<TableCell>{invoice.paymentStatus}</TableCell>
-						<TableCell>{invoice.paymentMethod}</TableCell>
+						<TableCell>{company?.name}</TableCell>
+						<TableCell>
+							{company?.createdAt.split("T")[0]}
+						</TableCell>
 						<TableCell className="text-right">
 							<Popover>
 								<PopoverTrigger>
