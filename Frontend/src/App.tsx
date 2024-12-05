@@ -8,6 +8,8 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Jobs from "./pages/admin/Jobs";
 import Companies from "./pages/admin/Companies";
+import CompaniesCreate from "./pages/admin/CompaniesCreate";
+import CompaniesSetup from "./pages/admin/CompaniesSetup";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -45,6 +47,14 @@ export default function App() {
 		{
 			path: "/admin/companies",
 			element: <Companies />,
+		},
+		{
+			path: "/admin/companies/create",
+			element: <CompaniesCreate />,
+		},
+		{
+			path: "/admin/companies/setup/:id",
+			element: <CompaniesSetup />,
 		},
 		{
 			path: "*",

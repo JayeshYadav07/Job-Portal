@@ -45,7 +45,7 @@ function CompaniesTable() {
 						</TableCell>
 						<TableCell>{invoice.paymentStatus}</TableCell>
 						<TableCell>{invoice.paymentMethod}</TableCell>
-						<TableCell className="text-right cursor-pointer">
+						<TableCell className="text-right">
 							<Popover>
 								<PopoverTrigger>
 									<MoreHorizontal />
