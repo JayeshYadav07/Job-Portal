@@ -1,4 +1,5 @@
 const Company = require("../models/companyModel");
+const uploadFiles = require("../utils/uploadFiles");
 
 const register = async (req, res) => {
 	try {
@@ -83,14 +84,17 @@ const getCompany = async (req, res) => {
 
 const updateCompany = async (req, res) => {
 	try {
-		const { name, description, website, location, logo } = req.body;
-
+		const { name, description, website, location } = req.body;
 		const updateData = {};
 		if (name) updateData.name = name;
 		if (description) updateData.description = description;
 		if (website) updateData.website = website;
 		if (location) updateData.location = location;
-		if (logo) updateData.logo = logo;
+
+		if (req.files) {
+			const result = await uploadFiles(req.files);
+			updateData.logo = result[0].secure_url;
+		}
 
 		const company = await Company.findOneAndUpdate(
 			{ _id: req.params.id, userId: req.userId },
@@ -99,7 +103,7 @@ const updateCompany = async (req, res) => {
 		);
 
 		if (!company) {
-			return res.status(404).json({
+			return res.status(400).json({
 				message: "Company not found!",
 				success: false,
 			});
@@ -111,7 +115,7 @@ const updateCompany = async (req, res) => {
 			company,
 		});
 	} catch (error) {
-		return res.status(404).json({
+		return res.status(400).json({
 			message: error.message || "Something went wrong!",
 			success: false,
 		});
