@@ -3,9 +3,29 @@ import CompaniesTable from "../../components/admin/CompaniesTable";
 import Navbar from "../../components/Navbar";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useFetchCompanies from "../../hooks/useFetchCompanies";
 
 function Companies() {
+	useFetchCompanies();
 	const navigate = useNavigate();
+	const { companies } = useSelector((state: any) => state.companies);
+	const [filter, setFilter] = useState("");
+	const [filteredCompanies, setFilteredCompanies] = useState(companies || []);
+
+	// filter by name
+	useEffect(() => {
+		setFilteredCompanies(
+			companies.filter((company: any) => {
+				if (filter === "") return true;
+				return company.name
+					.toLowerCase()
+					.includes(filter.toLowerCase());
+			})
+		);
+	}, [companies, filter]);
+
 	return (
 		<div>
 			<Navbar />
@@ -15,6 +35,7 @@ function Companies() {
 						placeholder="Filter by name"
 						type="search"
 						className="max-w-max"
+						onChange={(e) => setFilter(e.target.value)}
 					/>
 					<Button
 						variant="default"
@@ -24,7 +45,7 @@ function Companies() {
 						Add Company
 					</Button>
 				</div>
-				<CompaniesTable />
+				<CompaniesTable companies={filteredCompanies} />
 			</div>
 		</div>
 	);

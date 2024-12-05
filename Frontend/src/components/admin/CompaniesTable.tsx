@@ -10,14 +10,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "../ui/table";
-import useFetchCompanies from "../../hooks/useFetchCompanies";
-import { useSelector } from "react-redux";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 
-function CompaniesTable() {
-	useFetchCompanies();
-	const { companies } = useSelector((state: any) => state.companies);
+function CompaniesTable({ companies }: any) {
 	return (
 		<Table className="mt-4">
 			<TableCaption>A list of your recent invoices.</TableCaption>
