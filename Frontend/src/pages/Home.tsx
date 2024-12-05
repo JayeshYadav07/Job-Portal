@@ -15,10 +15,8 @@ export default function Home() {
 		if (user?.role === "recruiter") {
 			navigate("/admin/companies");
 		}
-		if (user?.role === "student") {
-			useFetchJob();
-		}
 	}, []);
+	useFetchJob();
 	return (
 		<div>
 			<Navbar />
