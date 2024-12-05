@@ -2,11 +2,11 @@ const Company = require("../models/companyModel");
 
 const register = async (req, res) => {
 	try {
-		const { name, description, website, location, logo } = req.body;
+		const { name } = req.body;
 
-		if (!name || !description || !website || !location || !logo) {
-			return res.status(404).json({
-				message: "Please enter all the required fields",
+		if (!name) {
+			return res.status(400).json({
+				message: "Company name is required.",
 				success: false,
 			});
 		}
@@ -24,10 +24,6 @@ const register = async (req, res) => {
 		// Create new company
 		const company = await Company.create({
 			name,
-			description,
-			website,
-			location,
-			logo,
 			userId: req.userId,
 		});
 
