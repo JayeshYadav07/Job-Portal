@@ -24,7 +24,7 @@ function useFetchCompanies() {
 			}
 		};
 		fetchCompanies();
-	});
+	}, []);
 
 	return null;
 }
