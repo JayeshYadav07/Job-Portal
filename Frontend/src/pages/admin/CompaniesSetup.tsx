@@ -8,12 +8,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../utils/constant";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 function CompaniesSetup() {
+	const { singleCompany } = useSelector((state: any) => state.companies);
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [input, setInput] = useState({
-		name: "",
+		name: singleCompany.name,
 		location: "",
 		description: "",
 		website: "",
@@ -73,7 +75,7 @@ function CompaniesSetup() {
 							type="text"
 							name="name"
 							value={input.name}
-							onChange={handleInputChange}
+							readOnly
 						/>
 					</div>
 					<div>

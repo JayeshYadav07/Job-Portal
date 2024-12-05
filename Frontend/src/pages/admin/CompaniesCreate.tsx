@@ -7,9 +7,12 @@ import { API_URL } from "../../utils/constant";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setSingleCompany } from "../../app/companiesSlice";
 
 function CompaniesCreate() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [name, setName] = useState("");
 	const handleRegister = async () => {
 		try {
@@ -21,6 +24,7 @@ function CompaniesCreate() {
 
 			if (response.data.success) {
 				toast.success(response.data.message);
+				dispatch(setSingleCompany(response.data.company));
 				navigate(`/admin/companies/setup/${response.data.company._id}`);
 			} else {
 				toast.error(response.data.message);
