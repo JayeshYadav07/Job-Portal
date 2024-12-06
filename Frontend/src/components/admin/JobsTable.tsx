@@ -10,36 +10,44 @@ import {
 	TableHeader,
 	TableRow,
 } from "../ui/table";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-function CompaniesTable({ companies }: any) {
+function JobsTable() {
+	const { adminJobs, textFilterJob } = useSelector((state: any) => state.job);
+	const [filteredJobs, setFilteredJobs] = useState(adminJobs);
+
+	useEffect(() => {
+		setFilteredJobs(
+			adminJobs.filter((job: any) => {
+				return (
+					job.title
+						.toLowerCase()
+						.includes(textFilterJob.toLowerCase()) ||
+					job.description
+						.toLowerCase()
+						.includes(textFilterJob.toLowerCase())
+				);
+			})
+		);
+	}, [adminJobs, textFilterJob]);
 	return (
 		<Table className="mt-4">
-			<TableCaption>A list of your recent companies.</TableCaption>
+			<TableCaption>A list of your recent jobs.</TableCaption>
 			<TableHeader>
 				<TableRow>
-					<TableHead>Logo</TableHead>
-					<TableHead>Name</TableHead>
+					<TableHead>Role</TableHead>
+					<TableHead>Description</TableHead>
 					<TableHead>Date</TableHead>
 					<TableHead className="text-right">Action</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{companies?.map((company: any) => (
-					<TableRow key={company?._id}>
-						<TableCell className="font-medium">
-							<Avatar>
-								<AvatarImage src={company?.logo} />
-								<AvatarFallback>
-									{company.name[0].toUpperCase()}
-								</AvatarFallback>
-							</Avatar>
-						</TableCell>
-						<TableCell>{company?.name}</TableCell>
-						<TableCell>
-							{company?.createdAt.split("T")[0]}
-						</TableCell>
+				{filteredJobs?.map((job: any) => (
+					<TableRow key={job?._id}>
+						<TableCell>{job?.title}</TableCell>
+						<TableCell>{job?.description}</TableCell>
+						<TableCell>{job?.createdAt.split("T")[0]}</TableCell>
 						<TableCell className="text-right">
 							<Popover>
 								<PopoverTrigger>
@@ -60,4 +68,4 @@ function CompaniesTable({ companies }: any) {
 	);
 }
 
-export default CompaniesTable;
+export default JobsTable;
