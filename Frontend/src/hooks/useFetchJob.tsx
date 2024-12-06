@@ -12,8 +12,6 @@ function useFetchJob() {
 					withCredentials: true,
 				});
 
-				console.log(response.data);
-
 				if (response.data.success) {
 					const jobs = response.data.jobs;
 					dispatch(setJobs(jobs));
