@@ -8,6 +8,7 @@ import { removeUser } from "../app/userSlice";
 import axios from "axios";
 import { API_URL } from "../utils/constant";
 import { toast } from "sonner";
+import { removeCompanies } from "../app/companiesSlice";
 
 export default function Navbar() {
 	const { user } = useSelector((state: any) => state.user);
@@ -26,6 +27,7 @@ export default function Navbar() {
 					richColors: true,
 				});
 				dispatch(removeUser());
+				dispatch(removeCompanies());
 				navigate("/login");
 			}
 		} catch (error: any) {
