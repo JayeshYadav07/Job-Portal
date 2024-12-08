@@ -1,5 +1,5 @@
 import { PopoverContent } from "@radix-ui/react-popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, EyeIcon, MoreHorizontal } from "lucide-react";
 import { Popover, PopoverTrigger } from "../ui/popover";
 import {
 	Table,
@@ -12,10 +12,12 @@ import {
 } from "../ui/table";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function JobsTable() {
 	const { adminJobs, textFilterJob } = useSelector((state: any) => state.job);
 	const [filteredJobs, setFilteredJobs] = useState(adminJobs);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setFilteredJobs(
@@ -53,10 +55,21 @@ function JobsTable() {
 								<PopoverTrigger>
 									<MoreHorizontal />
 								</PopoverTrigger>
-								<PopoverContent className="w-30 p-2 shadow-md rounded z-10 bg-green-600 text-white">
-									<div className="flex items-center gap-2 ">
+								<PopoverContent className="w-30 p-2 shadow-md rounded z-10 bg-white">
+									<div className="flex items-center gap-2 cursor-pointer hover:text-red-600">
 										<Edit2 className="w-4" />
 										<span>Edit</span>
+									</div>
+									<div
+										className="flex items-center gap-2 cursor-pointer hover:text-red-600"
+										onClick={() =>
+											navigate(
+												`/admin/job/applicants/${job._id}`
+											)
+										}
+									>
+										<EyeIcon className="w-4" />
+										<span>Applicants</span>
 									</div>
 								</PopoverContent>
 							</Popover>

@@ -6,10 +6,11 @@ import JobDescription from "./pages/JobDescription";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
-import Jobs from "./pages/admin/Jobs";
+import Applicants from "./pages/admin/Applicants";
 import Companies from "./pages/admin/Companies";
 import CompaniesCreate from "./pages/admin/CompaniesCreate";
 import CompaniesSetup from "./pages/admin/CompaniesSetup";
+import Jobs from "./pages/admin/Jobs";
 import JobsCreate from "./pages/admin/JobsCreate";
 export default function App() {
 	const router = createBrowserRouter([
@@ -42,14 +43,6 @@ export default function App() {
 			element: <JobDescription />,
 		},
 		{
-			path: "/admin/jobs",
-			element: <Jobs />,
-		},
-		{
-			path: "/admin/job/create",
-			element: <JobsCreate />,
-		},
-		{
 			path: "/admin/companies",
 			element: <Companies />,
 		},
@@ -60,6 +53,18 @@ export default function App() {
 		{
 			path: "/admin/companies/setup/:id",
 			element: <CompaniesSetup />,
+		},
+		{
+			path: "/admin/jobs",
+			element: <Jobs />,
+		},
+		{
+			path: "/admin/job/create",
+			element: <JobsCreate />,
+		},
+		{
+			path: "/admin/job/applicants/:id",
+			element: <Applicants />,
 		},
 		{
 			path: "*",
