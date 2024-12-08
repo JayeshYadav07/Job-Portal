@@ -14,6 +14,6 @@ router.route("/login").post(login);
 router
 	.route("/profile/update")
 	.patch(isAuthentication, multipleUpload, updateProfile);
-router.route("/logout").get(isAuthentication, logout);
+router.route("/logout").get(logout);
 
 module.exports = router;
