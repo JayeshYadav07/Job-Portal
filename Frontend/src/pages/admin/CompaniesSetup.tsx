@@ -16,9 +16,9 @@ function CompaniesSetup() {
 	const { id } = useParams();
 	const [input, setInput] = useState({
 		name: singleCompany.name,
-		location: "",
-		description: "",
-		website: "",
+		location: singleCompany.location || "",
+		description: singleCompany.description || "",
+		website: singleCompany.website || "",
 		logo: "" as File | "",
 	});
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

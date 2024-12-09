@@ -12,8 +12,13 @@ import {
 } from "../ui/table";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSingleCompany } from "../../app/companiesSlice";
 
 function CompaniesTable({ companies }: any) {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	return (
 		<Table className="mt-4">
 			<TableCaption>A list of your recent companies.</TableCaption>
@@ -46,7 +51,15 @@ function CompaniesTable({ companies }: any) {
 									<MoreHorizontal />
 								</PopoverTrigger>
 								<PopoverContent className="w-30 p-2 shadow-md rounded z-10 bg-green-600 text-white">
-									<div className="flex items-center gap-2 ">
+									<div
+										className="flex items-center gap-2 cursor-pointer"
+										onClick={() => {
+											dispatch(setSingleCompany(company));
+											navigate(
+												`/admin/companies/setup/${company?._id}`
+											);
+										}}
+									>
 										<Edit2 className="w-4" />
 										<span>Edit</span>
 									</div>
