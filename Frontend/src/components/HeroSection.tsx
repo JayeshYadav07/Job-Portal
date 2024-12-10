@@ -1,8 +1,21 @@
 import { SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../app/jobSlice";
 
 function HeroSection() {
+	const [searchText, setSearchText] = useState("");
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const handleSearch = () => {
+		if (searchText) {
+			dispatch(setSearchQuery(searchText));
+			navigate("/browse");
+		}
+	};
 	return (
 		<div className="max-w-screen-lg mx-auto my-4 flex flex-col gap-4">
 			<div className="flex justify-center">
@@ -22,8 +35,13 @@ function HeroSection() {
 							elit. Quos, officiis
 						</p>
 						<div className="flex gap-1">
-							<Input placeholder="Search Jobs" />
-							<Button>
+							<Input
+								placeholder="Search Jobs"
+								type="search"
+								value={searchText}
+								onChange={(e) => setSearchText(e.target.value)}
+							/>
+							<Button onClick={handleSearch}>
 								<SearchIcon />
 							</Button>
 						</div>

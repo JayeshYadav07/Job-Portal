@@ -1,9 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import JobCard from "../components/JobCard";
 import Navbar from "../components/Navbar";
+import { useEffect } from "react";
+import { setSearchQuery } from "../app/jobSlice";
+import useFetchJob from "../hooks/useFetchJob";
 
 function Browse() {
+	useFetchJob();
+	const dispatch = useDispatch();
 	const { jobs } = useSelector((state: any) => state.job);
+
+	useEffect(() => {
+		return () => {
+			dispatch(setSearchQuery(""));
+		};
+	}, []);
 	return (
 		<div>
 			<Navbar />
