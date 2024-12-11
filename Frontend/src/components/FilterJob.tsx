@@ -1,12 +1,21 @@
 import { ListFilter } from "lucide-react";
-import { Checkbox } from "./ui/checkbox";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../app/jobSlice";
 import { Label } from "./ui/label";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 function FilterJob() {
 	const filter: any = {
-		Location: ["Remote", "Hybrid", "Onsite"],
+		Location: ["Delhi", "Mumbai", "Bangalore"],
 		Role: ["Frontend", "Backend", "Fullstack", "Devops"],
-		Salary: ["<10k", "10k-20k", "20k-30k", "30k-50k", ">50k"],
+		Type: ["Remote", "Onsite"],
+	};
+	const dispatch = useDispatch();
+	const [value, setValue] = useState("");
+	const handleChange = (value: string) => {
+		setValue(value);
+		dispatch(setSearchQuery(value));
 	};
 	return (
 		<div className="col-span-1">
@@ -15,22 +24,24 @@ function FilterJob() {
 			</h1>
 			<hr className="my-2" />
 			<div>
-				{Object.keys(filter).map((key) => (
-					<div key={key} className="flex flex-col gap-2 my-3 ">
-						<h2 className="text-md font-medium text-red-500">
-							{key}
-						</h2>
-						{filter[key].map((item: string) => (
-							<div
-								key={item}
-								className="flex text-gray-700 items-center gap-2"
-							>
-								<Checkbox id={item} />
-								<Label>{item}</Label>
-							</div>
-						))}
-					</div>
-				))}
+				<RadioGroup onValueChange={handleChange} value={value}>
+					{Object.keys(filter).map((key) => (
+						<div key={key} className="flex flex-col gap-2 my-3 ">
+							<h2 className="text-md font-medium text-red-500">
+								{key}
+							</h2>
+							{filter[key].map((item: string) => (
+								<div
+									key={item}
+									className="flex text-gray-700 items-center gap-2"
+								>
+									<RadioGroupItem value={item} id={item} />
+									<Label>{item}</Label>
+								</div>
+							))}
+						</div>
+					))}
+				</RadioGroup>
 			</div>
 		</div>
 	);
