@@ -12,6 +12,7 @@ import CompaniesCreate from "./pages/admin/CompaniesCreate";
 import CompaniesSetup from "./pages/admin/CompaniesSetup";
 import Jobs from "./pages/admin/Jobs";
 import JobsCreate from "./pages/admin/JobsCreate";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 export default function App() {
 	const router = createBrowserRouter([
 		{
@@ -44,27 +45,51 @@ export default function App() {
 		},
 		{
 			path: "/admin/companies",
-			element: <Companies />,
+			element: (
+				<ProtectedRoute>
+					<Companies />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/admin/companies/create",
-			element: <CompaniesCreate />,
+			element: (
+				<ProtectedRoute>
+					<CompaniesCreate />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/admin/companies/setup/:id",
-			element: <CompaniesSetup />,
+			element: (
+				<ProtectedRoute>
+					<CompaniesSetup />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/admin/jobs",
-			element: <Jobs />,
+			element: (
+				<ProtectedRoute>
+					<Jobs />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/admin/job/create",
-			element: <JobsCreate />,
+			element: (
+				<ProtectedRoute>
+					<JobsCreate />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "/admin/job/applicants/:id",
-			element: <Applicants />,
+			element: (
+				<ProtectedRoute>
+					<Applicants />
+				</ProtectedRoute>
+			),
 		},
 		{
 			path: "*",
