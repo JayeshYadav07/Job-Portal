@@ -26,7 +26,7 @@ function useFetchJob() {
 			}
 		};
 		fetchJobs();
-	}, []);
+	}, [searchQuery]);
 
 	return null;
 }

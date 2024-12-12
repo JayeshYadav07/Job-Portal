@@ -1,5 +1,5 @@
 import { ListFilter } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchQuery } from "../app/jobSlice";
 import { Label } from "./ui/label";
@@ -15,8 +15,13 @@ function FilterJob() {
 	const [value, setValue] = useState("");
 	const handleChange = (value: string) => {
 		setValue(value);
-		dispatch(setSearchQuery(value));
 	};
+	useEffect(() => {
+		dispatch(setSearchQuery(value));
+		return () => {
+			dispatch(setSearchQuery(""));
+		};
+	}, [value]);
 	return (
 		<div className="col-span-1">
 			<h1 className="text-xl font-medium flex items-center">
