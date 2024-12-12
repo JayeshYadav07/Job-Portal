@@ -1,8 +1,10 @@
 import FilterJob from "../components/FilterJob";
 import JobSection from "../components/JobSection";
 import Navbar from "../components/Navbar";
+import useFetchJob from "../hooks/useFetchJob";
 
 function Job() {
+	useFetchJob();
 	return (
 		<div>
 			<Navbar />

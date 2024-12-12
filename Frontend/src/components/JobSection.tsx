@@ -2,14 +2,14 @@ import { useSelector } from "react-redux";
 import JobCard from "./JobCard";
 
 function JobSection() {
-	const { searchQuery } = useSelector((state: any) => state.job);
+	const { filterByJob } = useSelector((state: any) => state.job);
 	const { jobs } = useSelector((state: any) => state.job);
 	const filteredJobs = jobs.filter((job: any) => {
 		return (
-			job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			job.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			job.jobType.toLowerCase().includes(searchQuery.toLowerCase())
+			job.title.toLowerCase().includes(filterByJob.toLowerCase()) ||
+			job.description.toLowerCase().includes(filterByJob.toLowerCase()) ||
+			job.location.toLowerCase().includes(filterByJob.toLowerCase()) ||
+			job.jobType.toLowerCase().includes(filterByJob.toLowerCase())
 		);
 	});
 	return (

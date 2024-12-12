@@ -1,7 +1,7 @@
 import { ListFilter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSearchQuery } from "../app/jobSlice";
+import { setFilterByJob } from "../app/jobSlice";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
@@ -17,9 +17,9 @@ function FilterJob() {
 		setValue(value);
 	};
 	useEffect(() => {
-		dispatch(setSearchQuery(value));
+		dispatch(setFilterByJob(value));
 		return () => {
-			dispatch(setSearchQuery(""));
+			dispatch(setFilterByJob(""));
 		};
 	}, [value]);
 	return (

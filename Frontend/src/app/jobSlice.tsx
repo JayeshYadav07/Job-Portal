@@ -8,6 +8,7 @@ const jobSlice = createSlice({
 		adminJobs: [],
 		textFilterJob: "",
 		searchQuery: "",
+		filterByJob: "",
 	},
 	reducers: {
 		setJobs: (state, action) => {
@@ -25,12 +26,16 @@ const jobSlice = createSlice({
 		setSearchQuery: (state, action) => {
 			state.searchQuery = action.payload;
 		},
+		setFilterByJob: (state, action) => {
+			state.filterByJob = action.payload;
+		},
 		resetJob: (state) => {
 			state.jobs = [];
 			state.singleJob = null;
 			state.adminJobs = [];
 			state.textFilterJob = "";
 			state.searchQuery = "";
+			state.filterByJob = "";
 		},
 	},
 });
@@ -42,5 +47,6 @@ export const {
 	setTextFilterJob,
 	setSearchQuery,
 	resetJob,
+	setFilterByJob,
 } = jobSlice.actions;
 export default jobSlice.reducer;
