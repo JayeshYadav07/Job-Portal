@@ -9,6 +9,7 @@ import axios from "axios";
 import { API_URL } from "../utils/constant";
 import { toast } from "sonner";
 import { removeCompanies } from "../app/companiesSlice";
+import { resetJob } from "../app/jobSlice";
 
 export default function Navbar() {
 	const { user } = useSelector((state: any) => state.user);
@@ -28,6 +29,7 @@ export default function Navbar() {
 				});
 				dispatch(removeUser());
 				dispatch(removeCompanies());
+				dispatch(resetJob());
 				navigate("/login");
 			}
 		} catch (error: any) {

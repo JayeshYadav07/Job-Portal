@@ -25,6 +25,13 @@ const jobSlice = createSlice({
 		setSearchQuery: (state, action) => {
 			state.searchQuery = action.payload;
 		},
+		resetJob: (state) => {
+			state.jobs = [];
+			state.singleJob = null;
+			state.adminJobs = [];
+			state.textFilterJob = "";
+			state.searchQuery = "";
+		},
 	},
 });
 
@@ -34,5 +41,6 @@ export const {
 	setAdminJobs,
 	setTextFilterJob,
 	setSearchQuery,
+	resetJob,
 } = jobSlice.actions;
 export default jobSlice.reducer;
