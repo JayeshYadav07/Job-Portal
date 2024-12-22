@@ -1,14 +1,12 @@
+import axios from "axios";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import Navbar from "../../components/Navbar";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { API_URL } from "../../utils/constant";
-import axios from "axios";
-import React, { DOMElement, useState } from "react";
-import { toast } from "sonner";
-import { useDispatch, useSelector } from "react-redux";
-import { ArrowLeft } from "lucide-react";
 import {
 	Select,
 	SelectContent,
@@ -17,7 +15,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../../components/ui/select";
-import { setAdminJobs } from "../../app/jobSlice";
+import { API_URL } from "../../utils/constant";
 
 interface JobDataType {
 	title: string;
@@ -33,7 +31,6 @@ interface JobDataType {
 
 function JobsCreate() {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const { companies } = useSelector((state: any) => state.companies);
 	const [input, setInput] = useState<JobDataType>({
 		title: "",
